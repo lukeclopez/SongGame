@@ -1,5 +1,5 @@
-var scores, words, activePlayer, gameRunning;
-var namesEl, scoresEl, guessWordEl, tabooWordsEl;
+var time, scores, words, activePlayer, gameRunning;
+var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
 
 scores = [0 , 0];
 
@@ -24,6 +24,8 @@ words = [
     },
 ];
 
+timeEl = document.getElementById("time");
+
 namesEl = [
     document.getElementById('name-1'), 
     document.getElementById('name-2')
@@ -42,8 +44,12 @@ initGame();
 
 function initGame() {
     gameRunning = true;
+    time = 60;
+    setInterval(timer, 1000);
     activePlayer = 0;
-
+    scores = [0, 0]
+    
+    timeEl.textContent = time;
     scoresEl[0].textContent = 0;
     scoresEl[1].textContent = 0;
 
@@ -60,3 +66,9 @@ function selectWord() {
     return selectedWord;
 }
 
+function timer() {
+    if(gameRunning) {
+      time--;
+      timeEl.textContent = time;
+    }
+  }
