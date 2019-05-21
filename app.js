@@ -1,21 +1,7 @@
-var scores, words;
+var scores, words, activePlayer, gameRunning;
 var namesEl, scoresEl, guessWordEl, tabooWordsEl;
 
 scores = [0 , 0];
-
-namesEl = [
-    document.getElementById('name-1'), 
-    document.getElementById('name-2')
-];
-
-scoresEl = [
-    document.getElementById('score-1'), 
-    document.getElementById('score-2')
-];
-
-guessWordEl = document.getElementById('guess-word');
-
-tabooWordsEl = document.querySelectorAll(".taboo-word")
 
 words = [
     {
@@ -37,4 +23,37 @@ words = [
         ]
     },
 ];
+
+namesEl = [
+    document.getElementById('name-1'), 
+    document.getElementById('name-2')
+];
+
+scoresEl = [
+    document.getElementById('score-1'), 
+    document.getElementById('score-2')
+];
+
+guessWordEl = document.getElementById('guess-word');
+
+tabooWordsEl = document.querySelectorAll(".taboo-word")
+
+initGame();
+console.log(selectWord());
+
+function initGame() {
+    gameRunning = true;
+    activePlayer = 0;
+
+    scoresEl[0].textContent = 0;
+    scoresEl[1].textContent = 0;
+}
+
+function selectWord() {
+    dice = Math.floor(Math.random() * words.length);
+    selectedWord = words[dice]
+    console.log(dice)
+
+    return selectedWord;
+}
 
