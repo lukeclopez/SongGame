@@ -1,6 +1,8 @@
 var scores, guessWord, tabooWords;
 var namesEl, scoresEl, guessWordEl, tabooWordsEl;
 
+scores = [0 , 0];
+
 namesEl = [
     document.getElementById('name-1'), 
     document.getElementById('name-2')
@@ -13,6 +15,7 @@ scoresEl = [
 
 guessWordEl = document.getElementById('guess-word');
 
+tabooWordsEl = document.querySelectorAll(".taboo-word")
 
-scores = [0 , 0];
+
 
