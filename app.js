@@ -44,11 +44,12 @@ guessWordEl = document.getElementById('guess-word');
 tabooWordsEl = document.querySelectorAll(".taboo-word")
 
 initGame();
+setInterval(update, 1000);
 
 function initGame() {
+
     gameRunning = true;
     time = 60;
-    setInterval(update, 1000);
     activePlayer = 0;
     scores = [0, 0]
     
@@ -56,16 +57,23 @@ function initGame() {
     scoresEl[0].textContent = 0;
     scoresEl[1].textContent = 0;
 
+    getNewWord();
+
+}
+
+function getNewWord() {
+
     newWord = selectWord();
     guessWordEl.textContent = newWord.guessWord;
 
     for(var i = 0; i < newWord.tabooWords.length; i++) {
         tabooWordsEl[i].textContent = newWord.tabooWords[i];
     }
-    
+
 }
 
 function selectWord() {
+
     dice = Math.floor(Math.random() * words.length);
     selectedWord = words[dice];
 
@@ -77,33 +85,66 @@ function selectWord() {
     } else if (usedWords.includes(selectedWord)) {
 
         // Try again to get an unused word
-        selectWord();
+        console.log("REPEAT WORD!");
 
     } else {
         
         // Add the word to the used words list
         usedWords.push(selectedWord);
 
-        return selectedWord;
-
     }
+
+    return selectedWord;
+
 }
 
 function update() {
+
     if(gameRunning) {
+
         // Check if we are out of time
         if (time < 1) {
 
-            gameRunning = false;
+            // Switch Player
+            if (activePlayer === 0) {
+                activePlayer = 1;
+            } else {
+                activePlayer = 0;
+            }
 
         } else {
 
             // Count down on the timer
             time--;
             timeEl.textContent = time;
-            
-        }
 
-       
+        }
     }
   }
+
+document.getElementById('btn-got-it').addEventListener('click', function() {
+
+    // Update score
+    scores[activePlayer]++;
+    scoresEl[activePlayer].textContent = scores[activePlayer];
+
+    // Change the word
+    getNewWord();
+
+});
+
+document.getElementById('btn-skip').addEventListener('click', function() {
+
+    // Change the word
+    getNewWord();
+
+});;
+
+document.getElementById('btn-new-game').addEventListener('click', function() {
+    
+    // Restart game
+    if (confirm("Start a new game?")) {
+        initGame();
+    }
+
+});;
