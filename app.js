@@ -1,4 +1,4 @@
-var scores, guessWord, tabooWords;
+var scores, words;
 var namesEl, scoresEl, guessWordEl, tabooWordsEl;
 
 scores = [0 , 0];
@@ -17,5 +17,24 @@ guessWordEl = document.getElementById('guess-word');
 
 tabooWordsEl = document.querySelectorAll(".taboo-word")
 
-
+words = [
+    {
+        guessWord: "Solomon",
+        tabooWords: [
+            "King",
+            "David",
+            "Wisdom",
+            "Peaceful"
+        ]
+    },
+    {
+        guessWord: "Jesus",
+        tabooWords: [
+            "God's Son",
+            "King",
+            "Teacher",
+            "Firstborn"
+        ]
+    },
+];
 
