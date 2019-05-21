@@ -11,7 +11,7 @@ words = [
             "King",
             "David",
             "Wisdom",
-            "Peaceful"
+            "Wives"
         ]
     },
     {
