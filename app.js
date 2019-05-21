@@ -91,7 +91,19 @@ function selectWord() {
 
 function update() {
     if(gameRunning) {
-      time--;
-      timeEl.textContent = time;
+        // Check if we are out of time
+        if (time < 1) {
+
+            gameRunning = false;
+
+        } else {
+
+            // Count down on the timer
+            time--;
+            timeEl.textContent = time;
+            
+        }
+
+       
     }
   }
