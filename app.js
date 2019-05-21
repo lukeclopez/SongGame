@@ -1,5 +1,6 @@
-var time, scores, words, activePlayer, gameRunning;
+var time, scores, activePlayer, gameRunning;
 var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
+var words, usedWords;
 
 scores = [0 , 0];
 
@@ -24,6 +25,8 @@ words = [
     },
 ];
 
+usedWords = [];
+
 timeEl = document.getElementById("time");
 
 namesEl = [
@@ -45,7 +48,7 @@ initGame();
 function initGame() {
     gameRunning = true;
     time = 60;
-    setInterval(timer, 1000);
+    setInterval(update, 1000);
     activePlayer = 0;
     scores = [0, 0]
     
@@ -53,20 +56,40 @@ function initGame() {
     scoresEl[0].textContent = 0;
     scoresEl[1].textContent = 0;
 
-    // Start the clock
+    newWord = selectWord();
+    guessWordEl.textContent = newWord.guessWord;
 
-    // Choose a word
+    for(var i = 0; i < newWord.tabooWords.length; i++) {
+        tabooWordsEl[i].textContent = newWord.tabooWords[i];
+    }
+    
 }
 
 function selectWord() {
     dice = Math.floor(Math.random() * words.length);
-    selectedWord = words[dice]
-    console.log(dice)
+    selectedWord = words[dice];
 
-    return selectedWord;
+    if (usedWords.length === words.length) {
+
+        // Empty our used words list if we have no words left
+        usedWords.length = 0;
+
+    } else if (usedWords.includes(selectedWord)) {
+
+        // Try again to get an unused word
+        selectWord();
+
+    } else {
+        
+        // Add the word to the used words list
+        usedWords.push(selectedWord);
+
+        return selectedWord;
+
+    }
 }
 
-function timer() {
+function update() {
     if(gameRunning) {
       time--;
       timeEl.textContent = time;
