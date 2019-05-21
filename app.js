@@ -39,7 +39,6 @@ guessWordEl = document.getElementById('guess-word');
 tabooWordsEl = document.querySelectorAll(".taboo-word")
 
 initGame();
-console.log(selectWord());
 
 function initGame() {
     gameRunning = true;
@@ -47,6 +46,10 @@ function initGame() {
 
     scoresEl[0].textContent = 0;
     scoresEl[1].textContent = 0;
+
+    // Start the clock
+
+    // Choose a word
 }
 
 function selectWord() {
