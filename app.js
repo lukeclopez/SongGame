@@ -210,13 +210,13 @@ pauseBtn.addEventListener('click', pauseGame = function() {
     if (gameRunning) {
 
         gameRunning = false;
-        pauseBtn.innerHTML = "Play";
+        pauseBtn.innerHTML = '<i class="material-icons">play_arrow</i>';
         hideWords();
 
     } else {
 
         gameRunning = true;
-        pauseBtn.innerHTML = "Pause";
+        pauseBtn.innerHTML = '<i class="material-icons">pause</i>';
         showWords();
 
         if (time < 1) {
