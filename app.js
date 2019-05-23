@@ -1,6 +1,8 @@
 var time, scores, activePlayer, gameRunning;
 var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
-var words, usedWords;
+var words, usedWords, currentGuessWord, currentTabooWords;
+
+const STARTING_TIME = 5;
 
 scores = [0 , 0];
 
@@ -49,9 +51,10 @@ setInterval(update, 1000);
 function initGame() {
 
     gameRunning = true;
-    time = 60;
+    time = STARTING_TIME;
     activePlayer = 0;
-    scores = [0, 0]
+    scores = [0, 0];
+    usedWords.length = 0;
     
     timeEl.textContent = time;
     scoresEl[0].textContent = 0;
@@ -64,10 +67,16 @@ function initGame() {
 function getNewWord() {
 
     newWord = selectWord();
-    guessWordEl.textContent = newWord.guessWord;
+
+    // Save the current guess word
+    currentGuessWord = guessWordEl.textContent = newWord.guessWord;
+    currentTabooWords = [];
 
     for(var i = 0; i < newWord.tabooWords.length; i++) {
         tabooWordsEl[i].textContent = newWord.tabooWords[i];
+
+        // save each of the taboo words
+        currentTabooWords.push(newWord.tabooWords[i]);
     }
 
 }
@@ -112,6 +121,9 @@ function update() {
                 activePlayer = 0;
             }
 
+            // Pause the game
+            pauseGame();
+
         } else {
 
             // Count down on the timer
@@ -120,9 +132,29 @@ function update() {
 
         }
 
-        // If game is paused or over, hide the words
+        
+    } else {
+
+        
+
     }
   }
+
+function hideWords() {
+    guessWordEl.textContent = "---";
+
+    for(var i = 0; i < newWord.tabooWords.length; i++) {
+        tabooWordsEl[i].textContent = "---";
+    }
+}
+
+function showWords() {
+    guessWordEl.textContent = currentGuessWord;
+
+    for(var i = 0; i < newWord.tabooWords.length; i++) {
+        tabooWordsEl[i].textContent = currentTabooWords[i];
+    }
+}
 
 document.getElementById('btn-got-it').addEventListener('click', function() {
 
@@ -146,19 +178,37 @@ document.getElementById('btn-new-game').addEventListener('click', function() {
     
     // Restart game
     if (confirm("Start a new game?")) {
+
         initGame();
+
     }
 
 });;
 
 var pauseBtn = document.getElementById('btn-pause')
 
-pauseBtn.addEventListener('click', function() {
+pauseBtn.addEventListener('click', pauseGame = function() {
+
     if (gameRunning) {
+
         gameRunning = false;
         pauseBtn.innerHTML = "Play";
+        hideWords();
+
     } else {
+
         gameRunning = true;
         pauseBtn.innerHTML = "Pause";
+        showWords();
+        
+        if (time < 1) {
+            // Set the timer back to the starting time
+            time = STARTING_TIME;
+
+            // Choose a new word
+            getNewWord();
+        }
+
     }
-});;
+
+});
