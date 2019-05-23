@@ -73,6 +73,7 @@ function getNewWord() {
     currentTabooWords = [];
 
     for(var i = 0; i < newWord.tabooWords.length; i++) {
+
         tabooWordsEl[i].textContent = newWord.tabooWords[i];
 
         // save each of the taboo words
@@ -115,11 +116,8 @@ function update() {
         if (time < 1) {
 
             // Switch Player
-            if (activePlayer === 0) {
-                activePlayer = 1;
-            } else {
-                activePlayer = 0;
-            }
+            switchPlayer();
+
 
             // Pause the game
             pauseGame();
@@ -140,6 +138,20 @@ function update() {
     }
   }
 
+function switchPlayer() {
+
+    if (activePlayer === 0) {
+        activePlayer = 1;
+        namesEl[0].classList.toggle("bold");
+        namesEl[1].classList.toggle("bold");
+    } else {
+        activePlayer = 0;
+        namesEl[0].classList.toggle("bold");
+        namesEl[1].classList.toggle("bold");
+    }
+
+}
+
 function hideWords() {
     guessWordEl.textContent = "---";
 
@@ -159,6 +171,7 @@ function showWords() {
 document.getElementById('btn-got-it').addEventListener('click', function() {
 
     if (gameRunning) {
+
         // Update score
         scores[activePlayer]++;
         scoresEl[activePlayer].textContent = scores[activePlayer];
@@ -172,6 +185,7 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
 document.getElementById('btn-skip').addEventListener('click', function() {
 
     if (gameRunning) {
+
         // Change the word
         getNewWord();
     }
@@ -206,6 +220,7 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         showWords();
 
         if (time < 1) {
+
             // Set the timer back to the starting time
             time = STARTING_TIME;
 
