@@ -119,6 +119,8 @@ function update() {
             timeEl.textContent = time;
 
         }
+
+        // If game is paused or over, hide the words
     }
   }
 
@@ -147,4 +149,16 @@ document.getElementById('btn-new-game').addEventListener('click', function() {
         initGame();
     }
 
+});;
+
+var pauseBtn = document.getElementById('btn-pause')
+
+pauseBtn.addEventListener('click', function() {
+    if (gameRunning) {
+        gameRunning = false;
+        pauseBtn.innerHTML = "Play";
+    } else {
+        gameRunning = true;
+        pauseBtn.innerHTML = "Pause";
+    }
 });;
