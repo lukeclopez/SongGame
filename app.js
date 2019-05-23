@@ -158,19 +158,23 @@ function showWords() {
 
 document.getElementById('btn-got-it').addEventListener('click', function() {
 
-    // Update score
-    scores[activePlayer]++;
-    scoresEl[activePlayer].textContent = scores[activePlayer];
+    if (gameRunning) {
+        // Update score
+        scores[activePlayer]++;
+        scoresEl[activePlayer].textContent = scores[activePlayer];
 
-    // Change the word
-    getNewWord();
+        // Change the word
+        getNewWord();
+    }
 
 });
 
 document.getElementById('btn-skip').addEventListener('click', function() {
 
-    // Change the word
-    getNewWord();
+    if (gameRunning) {
+        // Change the word
+        getNewWord();
+    }
 
 });;
 
@@ -200,7 +204,7 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         gameRunning = true;
         pauseBtn.innerHTML = "Pause";
         showWords();
-        
+
         if (time < 1) {
             // Set the timer back to the starting time
             time = STARTING_TIME;
