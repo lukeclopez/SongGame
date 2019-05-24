@@ -2,7 +2,7 @@ var time, scores, activePlayer, gameRunning;
 var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
 var words, usedWords, currentGuessWord, currentTabooWords;
 
-const STARTING_TIME = 5;
+const STARTING_TIME = 60;
 
 scores = [0 , 0];
 
