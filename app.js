@@ -223,6 +223,7 @@ pauseBtn.addEventListener('click', pauseGame = function() {
 
             // Set the timer back to the starting time
             time = STARTING_TIME;
+            timeEl.textContent = time;
 
             // Choose a new word
             getNewWord();
