@@ -10,8 +10,8 @@
     opacity: 0.6;
 }
 
-.mont-blue {
-    color: #145E9D;
+.large-text {
+    font-size: 2em;
 }
 
 
@@ -25,4 +25,6 @@ body {
 
     background-repeat: no-repeat;
     background-size: cover;
+
+    background-color: #135391;
 }
