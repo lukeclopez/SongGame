@@ -1,6 +1,6 @@
 var time, scores, activePlayer, gameRunning;
 var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
-var words, usedWords, currentGuessWord, currentTabooWords;
+var words, usedWords, currentGuessWord, currentTabooWords, wordCount;
 
 const STARTING_TIME = 60;
 
@@ -50,17 +50,15 @@ setInterval(update, 1000);
 
 function initGame() {
 
-    gameRunning = true;
     time = STARTING_TIME;
     activePlayer = 0;
     scores = [0, 0];
     usedWords.length = 0;
+    wordCount = 0;
     
     timeEl.textContent = time;
     scoresEl[0].textContent = 0;
     scoresEl[1].textContent = 0;
-
-    getNewWord();
 
 }
 
@@ -79,6 +77,8 @@ function getNewWord() {
         // save each of the taboo words
         currentTabooWords.push(newWord.tabooWords[i]);
     }
+
+    wordCount++;
 
 }
 
@@ -215,6 +215,11 @@ pauseBtn.addEventListener('click', pauseGame = function() {
 
     } else {
 
+        // Get a new word if this is the first one of the game.
+        if (wordCount == 0) {
+            getNewWord();
+        }
+        
         gameRunning = true;
         pauseBtn.innerHTML = '<i class="material-icons">pause</i>';
         showWords();
