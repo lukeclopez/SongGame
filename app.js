@@ -215,7 +215,7 @@ pauseBtn.addEventListener('click', pauseGame = function() {
 
     } else {
 
-        // Get a new word if this is the first one of the game.
+        // Get a new word if this is the first time since initGame() was called
         if (wordCount == 0) {
             getNewWord();
         }
