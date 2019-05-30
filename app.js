@@ -175,12 +175,14 @@ function selectWord() {
     if (usedWords.length === words.length) {
 
         // Empty our used words list if we have no words left
+        console.log("Used word array cleared");
         usedWords.length = 0;
 
     } else if (usedWords.includes(selectedWord)) {
 
         // Try again to get an unused word
-        console.log("REPEAT WORD!");
+        console.log("Repeated a word: " + selectedWord.guessWord);
+        selectWord();
 
     } else {
         
