@@ -14,7 +14,19 @@
     font-size: 2em;
 }
 
-
+.my-pulse {
+    animation: pulse 2s infinite alternate-reverse;
+  }
+  
+@keyframes pulse {
+    0% {
+        background-color: rgba(255, 255, 255, 0.4);
+        color: black;
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
 
 html {
     /* 

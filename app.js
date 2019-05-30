@@ -297,7 +297,10 @@ pauseBtn.addEventListener('click', pauseGame = function() {
     if (gameRunning) {
 
         gameRunning = false;
+
         pauseBtn.innerHTML = '<i class="material-icons">play_arrow</i>';
+        pauseBtn.classList.toggle("my-pulse");
+
         hideWords();
 
     } else {
@@ -308,7 +311,10 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         }
         
         gameRunning = true;
+
         pauseBtn.innerHTML = '<i class="material-icons">pause</i>';
+        pauseBtn.classList.toggle("my-pulse");
+        
         showWords();
 
         if (time < 1) {
