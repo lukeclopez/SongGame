@@ -117,7 +117,7 @@ hardcoded_words = [
 words = [];
 
 // apiBaseUrl = 'http://127.0.0.1:8000/words/?page=';
-apiBaseUrl = 'http://127.0.0.1:8000/words/?page=';
+apiBaseUrl = 'https://bridleitapi.herokuapp.com/words/?page=';
 pageNumber = 1;
 
 fetchWords = async () => {
@@ -133,6 +133,7 @@ fetchWords = async () => {
     } catch (error) {
         // If the API is for some reason unavailable, then the hardcoded words will be used.
         words = hardcoded_words;
+        console.log("API unavailable. Using hardcoded words.")
     }
 };
 
