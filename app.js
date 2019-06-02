@@ -116,6 +116,7 @@ hardcoded_words = [
 
 words = [];
 
+// apiBaseUrl = 'http://127.0.0.1:8000/words/?page=';
 apiBaseUrl = 'http://127.0.0.1:8000/words/?page=';
 pageNumber = 1;
 
@@ -133,13 +134,13 @@ fetchWords = async () => {
         // If the API is for some reason unavailable, then the hardcoded words will be used.
         words = hardcoded_words;
     }
-
 };
 
 pageNumber = 1;
 fetchWords();
 
-// Load all words TODO: Make the 11 dynamic
+// Load all words
+// TODO: Make the 11 dynamic. Math.ceil(totalWords / API_PAGINATION_SIZE)
 while (pageNumber < 11) {
     fetchWords();
     pageNumber += 1;
@@ -251,12 +252,6 @@ function update() {
             timeEl.textContent = time;
 
         }
-
-        
-    } else {
-
-        
-
     }
   }
 
