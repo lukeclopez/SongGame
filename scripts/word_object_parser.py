@@ -21,7 +21,7 @@ class WordObject:
         return json_word
 
 
-with open("BibleTaboo\wordlist.txt", "r") as input_file:
+with open("BibleTaboo\data\wordlist.txt", "r") as input_file:
     file_text = input_file.read()
     file_text = file_text.replace("\t", "")
     
