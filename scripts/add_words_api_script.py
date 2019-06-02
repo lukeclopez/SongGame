@@ -1,7 +1,8 @@
 import requests
 
+# url = "http://127.0.0.1:8000/words/"
 url = "http://127.0.0.1:8000/words/"
-auth = ("luke", "riboflavin45")
+auth = ("luke", input("Enter Password: "))
 
 word_objects = []
 
