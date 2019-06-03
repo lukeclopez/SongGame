@@ -171,13 +171,13 @@ function initGame() {
 
     // Check localStorage for game values, otherwise use defaults
     if (localStorage.startingTime) {
-        time = localStorage.startingTime;
+        time = parseInt(localStorage.startingTime);
     } else {
         time = 60;
     }
 
     if (localStorage.activePlayer) {
-        activePlayer = localStorage.activePlayer;
+        activePlayer = parseInt(localStorage.activePlayer);
     } else {
         activePlayer = 0;
     }
@@ -239,22 +239,23 @@ function selectWord() {
     dice = Math.floor(Math.random() * words.length);
     selectedWord = words[dice];
 
-    if (usedWords.length === totalWords) {
+    if (usedWords.length === 99) {
 
         // Empty our used words list if we have no words left
         console.log("Used word array cleared");
         usedWords.length = 0;
 
-    } else if (usedWords.includes(selectedWord)) {
+    } else if (usedWords.includes(selectedWord.guessWord)) {
 
         // Try again to get an unused word
         console.log("Repeated a word: " + selectedWord.guessWord);
+        console.log(usedWords.length);
         selectWord();
 
     } else {
         
         // Add the word to the used words list
-        usedWords.push(selectedWord);
+        usedWords.push(selectedWord.guessWord);
 
         // Add the used words list to local storage, separated by commas
         // TODO: Change from objects to plain text
@@ -392,7 +393,12 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         if (time < 1) {
 
             // Set the timer back to the starting time
-            time = localStorage.startingTime;
+            if (localStorage.startingTime) {
+                time = parseInt(localStorage.startingTime);
+            } else {
+                time = 60;
+            }
+
             timeEl.textContent = time;
 
             // Choose a new word
