@@ -3,7 +3,6 @@ var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
 var apiUrl, pageNumber
 var words, usedWords, hardcoded_words, currentGuessWord, currentTabooWords, wordCount, totalWords;
 
-const STARTING_TIME = 60;
 const API_PAGINATION_SIZE = 10;
 
 scores = [0 , 0];
@@ -25,7 +24,7 @@ hardcoded_words = [
 {"guessWord": "Stones", "tabooWords": ["Bread", "Goliath", "David", "Sling"]},
 {"guessWord": "Ephesus", "tabooWords": ["Congregation", "First Century", "Letter", "Paul"]},
 {"guessWord": "Nisan 14", "tabooWords": ["Month", "Passover", "Memorial", "Jesus"]},
-{"guessWord": "Annointed", "tabooWords": ["144,000", "Holy Spirit", "Oil", "Heaven"]},
+{"guessWord": "Annointed", "tabooWords": ["144 000", "Holy Spirit", "Oil", "Heaven"]},
 {"guessWord": "Hannah", "tabooWords": ["Samuel", "Drunk", "Prayer", "Eli"]},
 {"guessWord": "Abraham (Abram)", "tabooWords": ["Sarah", "Patriarch", "Seed", "Isaac"]},
 {"guessWord": "Isaac", "tabooWords": ["Sacrifice", "Abraham", "Sarah", "Rebekah"]},
@@ -170,15 +169,46 @@ setInterval(update, 1000);
 
 function initGame() {
 
-    time = STARTING_TIME;
-    activePlayer = 0;
-    scores = [0, 0];
-    usedWords.length = 0;
+    // Check localStorage for game values, otherwise use defaults
+    if (localStorage.startingTime) {
+        time = localStorage.startingTime;
+    } else {
+        time = 60;
+    }
+
+    if (localStorage.activePlayer) {
+        activePlayer = localStorage.activePlayer;
+    } else {
+        activePlayer = 0;
+    }
+
+    if (localStorage.scores) {
+        scores = localStorage.scores.split(",");
+    } else {
+        scores = [0, 0];
+    }
+
+    if (localStorage.usedWords) {
+        usedWords = localStorage.usedWords.split(",");
+    } else {
+        usedWords.length = 0;
+    }
+    
     wordCount = 0;
     
     timeEl.textContent = time;
-    scoresEl[0].textContent = 0;
-    scoresEl[1].textContent = 0;
+
+    if(activePlayer === 0){
+        namesEl[0].classList.add("bold");
+        namesEl[1].classList.remove("bold");
+    } else {
+        namesEl[1].classList.add("bold");
+        namesEl[0].classList.remove("bold");
+    }
+
+    scoresEl[0].textContent = scores[0];
+    scoresEl[1].textContent = scores[1];
+
 
 }
 
@@ -226,6 +256,10 @@ function selectWord() {
         // Add the word to the used words list
         usedWords.push(selectedWord);
 
+        // Add the used words list to local storage, separated by commas
+        // TODO: Change from objects to plain text
+        localStorage.setItem("usedWords", usedWords.join());
+
     }
 
     return selectedWord;
@@ -263,6 +297,8 @@ function switchPlayer() {
         activePlayer = 0;
     }
 
+    localStorage.setItem("activePlayer", activePlayer);
+
     namesEl[0].classList.toggle("bold");
     namesEl[1].classList.toggle("bold");
 }
@@ -291,6 +327,9 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
         scores[activePlayer]++;
         scoresEl[activePlayer].textContent = scores[activePlayer];
 
+        // Save scores to localStorage
+        localStorage.setItem("scores", scores.join());
+
         // Change the word
         getNewWord();
     }
@@ -311,6 +350,11 @@ document.getElementById('btn-new-game').addEventListener('click', function() {
     
     // Restart game
     if (confirm("Start a new game?")) {
+
+        // Clear some game variables
+        localStorage.removeItem("activePlayer");
+        localStorage.removeItem("scores");
+        localStorage.removeItem("usedWords");
 
         initGame();
 
@@ -348,7 +392,7 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         if (time < 1) {
 
             // Set the timer back to the starting time
-            time = STARTING_TIME;
+            time = localStorage.startingTime;
             timeEl.textContent = time;
 
             // Choose a new word
@@ -356,5 +400,23 @@ pauseBtn.addEventListener('click', pauseGame = function() {
         }
 
     }
+
+});
+
+var configBtn = document.getElementById('btn-config');
+
+configBtn.addEventListener('click', function() {
+
+    pauseGame();
+
+});
+
+var saveConfig = document.getElementById('config-save');
+var startingTimeEl = document.getElementById('starting-time');
+
+saveConfig.addEventListener('click', function() {
+
+    // Save all settings to localStorage
+    localStorage.setItem("startingTime", startingTimeEl.value);
 
 });
