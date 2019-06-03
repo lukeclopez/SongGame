@@ -15,7 +15,7 @@
 
         <link rel="stylesheet" href="style.css">
 
-        <title>Forbidden Words</title>
+        <title>Bridle It!</title>
     </head>
 
     <body>
@@ -90,6 +90,29 @@
                 <div class="col s12">
 
                     <p><button class="btn-large col s12 transparent grow" id="btn-new-game"><i class="material-icons">refresh</i></button></p>
+
+                </div>
+
+            </div>
+
+            <div class="row center">
+
+                <div class="col s12">
+
+                    <p><button class="btn-large col s12 transparent grow modal-trigger" href="#config" id="btn-config"><i class="material-icons">settings</i></button></p>
+
+                    <div id="config" class="modal">
+                        <div class="modal-content">
+                            <h4>Settings</h4>
+                            <p class="left-align">
+                                Starting Time:
+                                <input type="number" id="starting-time">
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="config-save">Save</a>
+                        </div>
+                    </div>
 
                 </div>
 
