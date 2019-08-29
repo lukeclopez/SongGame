@@ -135,9 +135,20 @@ function update() {
         // Check if we are out of time
         if (time < 1) {
 
+            // Update score
+            if (activePlayer === 1) {
+                scores[0]++;
+                scoresEl[0].textContent = scores[0];
+            } else {
+                scores[1]++;
+                scoresEl[1].textContent = scores[1];
+            }
+
+            // Save scores to localStorage
+            localStorage.setItem("scores", scores.join());
+
             // Switch Player
             switchPlayer();
-
 
             // Pause the game
             pauseGame();
@@ -185,15 +196,9 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
 
     if (gameRunning) {
 
-        // Update score
-        scores[activePlayer]++;
-        scoresEl[activePlayer].textContent = scores[activePlayer];
+        // Change the active player
+        switchPlayer();
 
-        // Save scores to localStorage
-        localStorage.setItem("scores", scores.join());
-
-        // Change the word
-        getNewWord();
     }
 
 });
@@ -204,6 +209,7 @@ document.getElementById('btn-skip').addEventListener('click', function() {
 
         // Change the word
         getNewWord();
+        
     }
 
 });;
