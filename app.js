@@ -1,7 +1,7 @@
 var time, scores, activePlayer, gameRunning;
 var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
 var apiUrl, pageNumber
-var words, usedWords, hardcoded_words, currentGuessWord, currentTabooWords, wordCount, totalWords;
+var words, usedWords, hardcoded_words, currentGuessWord, wordCount, totalWords, currentWordSkipped;
 
 scores = [0 , 0];
 
@@ -56,6 +56,8 @@ function initGame() {
     }
     
     wordCount = 0;
+
+    currentWordSkipped = 0;
     
     timeEl.textContent = time;
 
@@ -79,17 +81,6 @@ function getNewWord() {
 
     // Save the current guess word
     currentGuessWord = guessWordEl.textContent = newWord.guessWord;
-    currentTabooWords = [];
-
-    // to use hard-coded words:
-    //                 newWord.tabooWords.length
-    for(var i = 0; i < newWord['tabooWords'].length; i++) {
-
-        tabooWordsEl[i].textContent = newWord.tabooWords[i];
-
-        // save each of the taboo words
-        currentTabooWords.push(newWord.tabooWords[i]);
-    }
 
     wordCount++;
 
@@ -178,18 +169,10 @@ function switchPlayer() {
 
 function hideWords() {
     guessWordEl.textContent = "---";
-
-    for(var i = 0; i < newWord.tabooWords.length; i++) {
-        tabooWordsEl[i].textContent = "---";
-    }
 }
 
 function showWords() {
     guessWordEl.textContent = currentGuessWord;
-
-    for(var i = 0; i < newWord.tabooWords.length; i++) {
-        tabooWordsEl[i].textContent = currentTabooWords[i];
-    }
 }
 
 document.getElementById('btn-got-it').addEventListener('click', function() {
@@ -199,6 +182,9 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
         // Change the active player
         switchPlayer();
 
+        // Reset the skip counter
+        currentWordSkipped = 0;
+
     }
 
 });
@@ -207,9 +193,16 @@ document.getElementById('btn-skip').addEventListener('click', function() {
 
     if (gameRunning) {
 
-        // Change the word
-        getNewWord();
-        
+        // Give the word to the other team
+        currentWordSkipped++;
+        switchPlayer();
+
+        // If both teams skip the word, then choose a new word.
+        if (currentWordSkipped > 1) {
+            getNewWord();
+            currentWordSkipped = 0;
+        }
+
     }
 
 });;
