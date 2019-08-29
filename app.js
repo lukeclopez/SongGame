@@ -3,42 +3,9 @@ var timeEl, namesEl, scoresEl, guessWordEl, tabooWordsEl;
 var apiUrl, pageNumber
 var words, usedWords, hardcoded_words, currentGuessWord, currentTabooWords, wordCount, totalWords;
 
-const API_PAGINATION_SIZE = 10;
-
 scores = [0 , 0];
 
-words = [];
-
-// apiBaseUrl = 'http://127.0.0.1:8000/words/?page=';
-apiBaseUrl = 'https://bridleitapi.herokuapp.com/words/?page=';
-pageNumber = 1;
-
-fetchWords = async () => {
-    try {
-        const response = await fetch(apiBaseUrl + pageNumber);
-        const wordsJson = await response.json();
-        totalWords = wordsJson['count'];
-    
-        wordsJson.results.forEach( (result) => {
-            var parsedJson = JSON.parse(result['data'])
-            words.push(parsedJson);
-        });
-    } catch (error) {
-        // If the API is for some reason unavailable, then the hardcoded words will be used.
-        words = useHardCodedWords();
-        console.log("API unavailable. Using hardcoded words.")
-    }
-};
-
-pageNumber = 1;
-fetchWords();
-
-// Load all words
-// TODO: Make the 11 dynamic. Math.ceil(totalWords / API_PAGINATION_SIZE)
-while (pageNumber < 11) {
-    fetchWords();
-    pageNumber += 1;
-}
+words = useHardCodedWords();
 
 usedWords = [];
 
