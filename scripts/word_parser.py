@@ -32,19 +32,21 @@ exclude_words = [
 
 ]
 
-capitalize_words = [
-    "jehovah",
-    "jesus",
-    "christ",
-    "lord",
-
-]
-
 # Words that need an apostrophe between the third and fourth characters.
 abc_d_words = [
     "wont",
     "well",
     "lets",
+    "gods",
+
+]
+
+capitalize_words = [
+    "jehovah",
+    "jesus",
+    "christ",
+    "lord",
+    "god's",
 
 ]
 
@@ -54,14 +56,14 @@ df.to_csv(output_path, columns=["Word"], index=False)
 with open(output_path) as words_file:
     with open(final_output_path, "w") as ready_to_use_words_file:
         for index, line in enumerate(words_file):
-            print(index)
             line = line.strip()
 
             if line in exclude_words:
                 continue
             elif line in abc_d_words:
                 line = line[0:3] + "'" + line[-1]
-            elif line in capitalize_words:
+
+            if line in capitalize_words:
                 line = line.title()
 
             ready_to_use_words_file.write(f'"{line}",\r')
