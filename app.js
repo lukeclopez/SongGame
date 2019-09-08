@@ -174,6 +174,18 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
         // Reset the skip counter
         currentWordSkipped = 0;
 
+        // Change to the other player
+        switchPlayer();
+
+        // Set the timer back to the starting time
+        if (localStorage.startingTime) {
+            time = parseInt(localStorage.startingTime);
+        } else {
+            time = 60;
+        }
+
+        timeEl.textContent = time;
+
     }
 
 });
