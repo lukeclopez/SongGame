@@ -174,9 +174,6 @@ document.getElementById('btn-got-it').addEventListener('click', function() {
         // Reset the skip counter
         currentWordSkipped = 0;
 
-        // Get a new word
-        getNewWord();
-
     }
 
 });
